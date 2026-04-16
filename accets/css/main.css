@@ -8,7 +8,7 @@
 /* Тёмная тема (по умолчанию) */
 :root {
   --bg-primary: #0a0a0a;
-  --bg-secondary: #1a1a1a;
+  --bg-secondary: #0C0C10;
   --bg-card: rgba(255, 255, 255, 0.03);
   --bg-card-hover: rgba(255, 255, 255, 0.06);
   --border-subtle: rgba(255, 255, 255, 0.07);
@@ -39,6 +39,8 @@
   --toggle-bg: rgba(255, 255, 255, 0.15);
   --toggle-icon-show: '☀️';
   /* значок при тёмной теме */
+
+  --bg-cart-part: #18181b;
 }
 
 /* Светлая тема */
@@ -69,6 +71,8 @@
   --navbar-scroll-bg: rgba(255, 255, 255, 0.90);
 
   --toggle-bg: rgba(0, 0, 0, 0.10);
+
+  --bg-cart-part: #e9e9ee;
 }
 
 /* ── 2. RESET & BASE ───────────────────────────────────────── */
@@ -326,6 +330,7 @@ img {
   margin-top: 0.75rem;
 }
 
+
 /* ── 7. PARTNERS ───────────────────────────────────────────── */
 .partners-section {
   background: var(--partners-bg);
@@ -333,7 +338,27 @@ img {
   overflow: hidden;
 }
 
+.partners-slider {
+  width: 100%;
+}
+
+.partners-slider .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+.partners-slider .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+}
+
 .partner-logo {
+  max-width: 100%;
+  width: 140px;
+  /* можно менять */
+  height: auto;
+  object-fit: contain;
   transition: 0.3s;
 }
 
@@ -341,30 +366,6 @@ img {
   transform: scale(1.05);
 }
 
-/* чтобы не было дёрганий */
-.swiper-wrapper {
-  transition-timing-function: linear !important;
-}
-
-
-.partners-slider .swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: auto;
-}
-
-@media (max-width: 540px) {
-  .partners-slider .swiper-slide {
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .partners-slider .swiper-slide {
-    width: 50%;
-  }
-}
 
 
 /* ── 8. FEATURES ───────────────────────────────────────────── */
@@ -389,11 +390,31 @@ img {
   color: var(--text-primary);
 }
 
+.num {
+  position: absolute;
+  right: 6%;
+  bottom: 87%;
+  z-index: 9;
+  display: grid;
+  place-items: center;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  fill: linear-gradient(180deg, #000 0%, rgba(51, 51, 51, 0) 100%);
+  box-shadow: inset 0 4px 5px 0 rgba(255, 255, 255, 0.12), inset 0 -10px 10px 0 rgba(29, 161, 242, 0.26);
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+}
+
 .feature-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
   padding: clamp(1.25rem, 3vw, 2rem);
+  padding-top: 10px;
   height: 100%;
   transition: transform 0.3s, background 0.3s, border-color 0.3s;
   position: relative;
@@ -428,8 +449,7 @@ img {
 .feature-icon {
   width: 48px;
   height: 48px;
-  background: var(--accent-light);
-  border-radius: 12px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -702,6 +722,180 @@ img {
   color: #fff;
 }
 
+
+
+
+/*____partners*/
+.line_bg_header {
+  background-image: url('/accets/img/lines.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+
+}
+
+.card_part {
+  border-radius: 16px;
+  padding: 25px;
+  display: flex;
+  gap: 1rem;
+  place-items: center;
+  box-shadow: 0 0 0 0 #fff, 0 0 0 1px rgba(244, 244, 245, 0.1), 0 0 0 0 rgba(0, 0, 0, 0);
+  background: var(--bg-cart-part);
+  height: 185px;
+  margin-bottom: 1.5rem;
+}
+
+.card_part>p {
+  margin-bottom: 0;
+}
+
+
+.banner {
+  background-color: var(--bg-primary);
+  background-image:
+    /* Слой свечения */
+    radial-gradient(ellipse at bottom, rgba(50, 100, 200, 0.3) 0%, transparent 70%),
+    /* Слой текстуры (точки) */
+    radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px;
+  /* размер сетки 20px */
+}
+
+
+
+/*Integroo*/
+.integration-block {
+  padding: 60px 20px;
+}
+
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 40px;
+  max-width: 400px;
+}
+
+.title span {
+  color: var(--accent-blue);
+}
+
+/* Темная карточка приложения */
+.app-card {
+  border: 1px solid #1e293b;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 380px;
+}
+
+.brand-logo {
+  height: 40px;
+  margin-bottom: 30px;
+}
+
+.app-text {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.store-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.store-buttons img {
+  height: 45px;
+}
+
+/* Правая часть (Сетка) */
+.grid-side {
+  flex: 1.5;
+}
+
+.logo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo-item {
+  background: var(--bs-white);
+  border-radius: .5rem;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  flex: 1 0 30%;
+}
+
+.logo-item img {
+  max-width: 100%;
+  max-height: 45px;
+  object-fit: contain;
+}
+
+/* Широкие ячейки внизу */
+.logo-item.wide {
+  grid-column: span 1.5;
+  /* Для более точного соответствия можно использовать grid-template-columns: repeat(6, 1fr) */
+}
+
+/* Специальное правило для последней строки, чтобы было 2 больших блока */
+.logo-grid .wide:nth-last-child(2) {
+  grid-column: span 1.5;
+}
+
+
+
+/*Partner card*/
+.flex_part {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 2rem;
+}
+
+.flex_part .card {
+  border-radius: 17px;
+  padding: 0px 0px 20px;
+  border: none;
+  background-color: #18181B;
+}
+
+.flex_part .card .card-body {
+  color: var(--partners-bg);
+}
+
+.flex_part .card .card-body .card-text {
+  font-weight: 100;
+  font-size: 20px;
+  line-height: 134%;
+  color: #e1e6ef;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+  .logo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .logo-item.wide {
+    grid-column: span 1;
+  }
+}
+
 /* ── 15. АНИМАЦИИ ──────────────────────────────────────────── */
 @keyframes float {
 
@@ -767,11 +961,7 @@ img {
     /* отключаем 3d на телефоне */
   }
 
-  /* CTA: убираем абсолютные телефоны — они перекрывают кнопки */
-  .cta-phone {
-    display: none;
-    /* скрыть телефоны на xs, если они съедают место */
-  }
+
 
   /* Service: reverse-row работает через Bootstrap, но сбрасываем его на xs */
   .flex-row-reverse {
@@ -783,6 +973,30 @@ img {
     width: 100%;
     justify-content: center;
   }
+
+  .cta-phone {
+    display: grid;
+    justify-content: center;
+  }
+
+  .cta-phone .phone {
+    position: relative;
+    max-width: 11rem;
+    height: 100%;
+  }
+
+
+  .phone-top {
+    left: 0;
+  }
+
+  .phone-bottom {
+    right: 0;
+  }
+
+  .cta_text_box {
+    padding: 1rem;
+  }
 }
 
 /* 577–768px — большие телефоны / маленькие планшеты */
@@ -791,13 +1005,30 @@ img {
     margin-top: 2.5rem;
   }
 
-  .cta-phone {
-    min-height: 220px;
+  .hero-title {
+    text-align: center;
   }
+
+  .cta-phone {
+    display: flex;
+    justify-content: center;
+  }
+
 }
 
+@media (min-width: 992px) and (max-width: 1189px) {
+
+  .cta-phone .phone {
+    position: absolute;
+    max-width: 220px;
+    height: auto;
+  }
+
+}
+
+
 /* ≥ 992px — десктоп: восстанавливаем перспективу у hero-image */
-@media (min-width: 992px) {
+@media (min-width: 1024px) {
   .hero-image {
     transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
   }
@@ -843,4 +1074,18 @@ img {
   border-radius: 12px;
   max-width: 74px;
   background: rgba(255, 255, 255, 0.1);
+}
+
+
+.btnBrain {
+  color: var(--text-primary);
+}
+
+.storyIcon>img {
+  transition: background 0.3s, transform 0.3s;
+}
+
+.storyIcon>img:hover {
+  cursor: pointer;
+  transform: translateY(-3px);
 }
