@@ -1,0 +1,846 @@
+/* ============================================================
+   BRAIN — main.css
+   Стратегия: mobile-first, CSS custom properties для тем,
+   минимум фиксированных размеров, clamp() для fluid typography
+   ============================================================ */
+
+/* ── 1. ДИЗАЙН-ТОКЕНЫ ─────────────────────────────────────── */
+/* Тёмная тема (по умолчанию) */
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-hover: rgba(255, 255, 255, 0.14);
+
+  --accent: #227fc2;
+  --accent-glow: rgba(34, 127, 194, 0.3);
+  --accent-light: rgba(34, 127, 194, 0.12);
+
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-nav: #f8f9fc;
+
+  --hero-gradient: linear-gradient(351deg, #0a0a0a 0%, #1a1a2e 100%);
+  --hero-glow: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+  --title-gradient: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+
+  --shadow-card: 0 0 12px rgba(0, 0, 0, 0.08), inset 0 0 8px rgba(255, 255, 255, 0.32);
+  --shadow-heavy: 0 50px 100px rgba(0, 0, 0, 0.5);
+
+  --footer-bg: #000000;
+  --partners-bg: #ffffff;
+  --partners-text: #000000;
+
+  --navbar-bg: rgba(255, 255, 255, 0.10);
+  --navbar-scroll-bg: rgba(0, 0, 0, 0.80);
+
+  --toggle-bg: rgba(255, 255, 255, 0.15);
+  --toggle-icon-show: '☀️';
+  /* значок при тёмной теме */
+}
+
+/* Светлая тема */
+[data-theme="light"] {
+  --bg-primary: #f4f6fa;
+  --bg-secondary: #e8edf5;
+  --bg-card: rgba(0, 0, 0, 0.03);
+  --bg-card-hover: rgba(0, 0, 0, 0.06);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.15);
+
+  --text-primary: #0a0a0a;
+  --text-secondary: #4b5563;
+  --text-nav: #0a0a0a;
+
+  --hero-gradient: linear-gradient(351deg, #dde8f8 0%, #eef3fc 100%);
+  --hero-glow: radial-gradient(circle, rgba(34, 127, 194, 0.12) 0%, transparent 70%);
+  --title-gradient: linear-gradient(135deg, #0a0a0a 0%, #374151 100%);
+
+  --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.07), inset 0 0 4px rgba(255, 255, 255, 0.60);
+  --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.12);
+
+  --footer-bg: #1a1a1a;
+  --partners-bg: #ffffff;
+  --partners-text: #000000;
+
+  --navbar-bg: rgba(255, 255, 255, 0.55);
+  --navbar-scroll-bg: rgba(255, 255, 255, 0.90);
+
+  --toggle-bg: rgba(0, 0, 0, 0.10);
+}
+
+/* ── 2. RESET & BASE ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Выбираем шрифт с характером — Sora вместо скучного Inter */
+  font-family: 'Sora', 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── 3. FLUID TYPOGRAPHY (clamp = нет лишних медиазапросов) ── */
+.hero-title {
+  font-size: clamp(2rem, 5vw + 0.5rem, 4.5rem);
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw + 0.4rem, 1.4rem);
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 3vw + 0.5rem, 2.8rem);
+}
+
+.section-subtitle {
+  font-size: clamp(0.9rem, 1.5vw + 0.2rem, 1rem);
+}
+
+/* ── 4. ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ─────────────────────────────────── */
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: var(--toggle-bg);
+  color: var(--text-nav);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: background 0.3s, transform 0.3s;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: var(--accent-light);
+  transform: rotate(20deg) scale(1.1);
+}
+
+/* ── 5. NAVBAR ─────────────────────────────────────────────── */
+.navbar {
+  background: var(--navbar-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 90px;
+  margin-top: 1.2rem;
+  padding: 0.75rem 0;
+  transition: background 0.3s;
+}
+
+.navbar.scrolled {
+  background: var(--navbar-scroll-bg) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+}
+
+.navbar-brand img {
+  height: 32px;
+}
+
+.nav-link {
+  color: var(--text-nav) !important;
+  font-weight: 500;
+  transition: color 0.3s;
+  padding: 0.4rem 0.9rem !important;
+  white-space: nowrap;
+}
+
+.nav-link:hover,
+.active>a {
+  color: var(--accent) !important;
+}
+
+/* Мобильное меню */
+.navbar-toggler {
+  border: none;
+  padding: 0.4rem;
+}
+
+.navbar-toggler-icon {
+  background-image: none;
+  width: 22px;
+  height: 2px;
+  background: var(--text-nav);
+  display: block;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: var(--text-nav);
+  transition: transform 0.3s;
+}
+
+.navbar-toggler-icon::before {
+  top: -7px;
+}
+
+.navbar-toggler-icon::after {
+  top: 7px;
+}
+
+/* Кнопки навбара */
+.btn-primary-custom {
+  background: var(--accent);
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  white-space: nowrap;
+}
+
+.btn-primary-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+.btn-primary-outline-custom {
+  border: 1.5px solid var(--accent);
+  background: transparent;
+  color: var(--text-primary);
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.btn-primary-outline-custom:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn_pay {
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+/* Dropdown меню языка */
+.dropdown-menu-dark {
+  background: rgb(45 45 58) !important;
+}
+
+[data-theme="light"] .dropdown-menu-dark {
+  background: #fff !important;
+  color: #0a0a0a;
+}
+
+/* ── 6. HERO ───────────────────────────────────────────────── */
+.hero-section {
+  min-height: 100svh;
+  /* svh — безопаснее на мобилках */
+  background: var(--hero-gradient);
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(80px, 12vw, 120px);
+  padding-bottom: 3rem;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -15%;
+  width: min(800px, 90vw);
+  height: min(800px, 90vw);
+  background: var(--hero-glow);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-title {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.25rem;
+  background: var(--title-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.15;
+}
+
+.hero-subtitle {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-weight: 500;
+  margin-bottom: 1.75rem;
+}
+
+.hero-image {
+  transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+  transition: transform 0.5s;
+  box-shadow: var(--shadow-heavy);
+  border-radius: 16px;
+  overflow: hidden;
+  /* На мобилках убираем перспективу — экономим место */
+}
+
+.hero-image:hover {
+  transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+}
+
+.price-tag {
+  font-style: italic;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+}
+
+/* ── 7. PARTNERS ───────────────────────────────────────────── */
+.partners-section {
+  background: var(--partners-bg);
+  padding: 2.5rem 0;
+  overflow: hidden;
+}
+
+.partner-logo {
+  transition: 0.3s;
+}
+
+.partner-logo:hover {
+  transform: scale(1.05);
+}
+
+/* чтобы не было дёрганий */
+.swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+
+.partners-slider .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+@media (max-width: 540px) {
+  .partners-slider .swiper-slide {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .partners-slider .swiper-slide {
+    width: 50%;
+  }
+}
+
+
+/* ── 8. FEATURES ───────────────────────────────────────────── */
+.features-section {
+  padding: clamp(3rem, 7vw, 6rem) 0;
+  background: var(--bg-primary);
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(2rem, 4vw, 4rem);
+  line-height: 1.7;
+}
+
+.section-title {
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  height: 100%;
+  transition: transform 0.3s, background 0.3s, border-color 0.3s;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-card);
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--accent-light);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+  font-size: 1.4rem;
+}
+
+.feature-title {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  color: var(--text-primary);
+}
+
+.feature-text {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+/* ── 9. MOBILE APP SECTION ─────────────────────────────────── */
+.mobile-section {
+  padding: clamp(3rem, 7vw, 6rem) 0;
+  background: var(--bg-primary);
+}
+
+.mobile-phone {
+  position: relative;
+  max-width: 280px;
+  margin: 0 auto 3rem;
+}
+
+.phone-screen {
+  border-radius: 32px;
+  overflow: hidden;
+  aspect-ratio: 9/19;
+  box-shadow: var(--shadow-heavy);
+}
+
+.feature-list-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.feature-list-item:hover {
+  background: var(--bg-card-hover);
+  transform: translateX(6px);
+}
+
+.feature-check {
+  width: 26px;
+  height: 26px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.feature-check i {
+  font-size: 0.85rem;
+}
+
+.feature-list-item h4 {
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  color: var(--text-primary);
+}
+
+.feature-list-item p {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  margin-bottom: 0;
+}
+
+/* ── 10. DASHBOARD ─────────────────────────────────────────── */
+.dashboard-section {
+  padding: clamp(3rem, 7vw, 6rem) 0;
+  background: var(--bg-primary);
+}
+
+.dashboard-preview {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 20px;
+  padding: clamp(1rem, 2vw, 2rem);
+  box-shadow: var(--shadow-heavy);
+  border: 1px solid var(--border-subtle);
+}
+
+/* ── 11. SERVICE SECTION ───────────────────────────────────── */
+.service-section {
+  padding: clamp(3rem, 7vw, 6rem) 0;
+  background: var(--bg-secondary);
+}
+
+.service-row {
+  align-items: center;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.service-image {
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s;
+  width: 100%;
+}
+
+.service-image:hover {
+  transform: scale(1.02);
+}
+
+.service-row h3 {
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  color: var(--text-primary);
+}
+
+.service-row p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ── 12. TESTIMONIALS ──────────────────────────────────────── */
+.testimonials-section {
+  padding: clamp(3rem, 7vw, 6rem) 0;
+  background: var(--bg-primary);
+}
+
+.testimonials-slider {
+  padding-bottom: 2.5rem;
+}
+
+.testimonial-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.testimonial-card h5 {
+  color: var(--text-primary);
+  margin-top: 0.75rem;
+}
+
+.testimonial-card small {
+  color: var(--text-secondary);
+}
+
+.testimonial-card p {
+  color: var(--text-secondary);
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.testimonial-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ── 13. CTA SECTION ───────────────────────────────────────── */
+
+.cta-section {
+  background: linear-gradient(135deg, var(--accent) 0%, #227fc2 100%);
+
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.cta_text_box {
+  padding: 6rem 0;
+}
+
+.cta-phone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: -50px;
+  /* перекрытие */
+}
+
+.cta-phone .phone {
+  position: absolute;
+  max-width: 260px;
+  height: auto;
+}
+
+/* верхний телефон */
+.phone-top {
+  top: 0;
+  left: 10%;
+  z-index: 2;
+}
+
+/* нижний телефон */
+.phone-bottom {
+  bottom: 0;
+  right: 10%;
+  z-index: 1;
+}
+
+/* ── 14. FOOTER ────────────────────────────────────────────── */
+.footer {
+  background: var(--footer-bg);
+  padding: clamp(2.5rem, 5vw, 4rem) 0 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer-logo {
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.75rem;
+}
+
+.footer-logo img {
+  height: 28px;
+}
+
+.footer-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: var(--text-primary);
+}
+
+.social-icon {
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.social-icon:hover {
+  background: var(--accent);
+  transform: translateY(-3px);
+  color: #fff;
+}
+
+/* ── 15. АНИМАЦИИ ──────────────────────────────────────────── */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Fade-in при скролле */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 16. SCROLLBAR ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* ── 17. МЕДИАЗАПРОСЫ (только там, где clamp не справляется) ─ */
+
+/* ≤ 576px — телефоны */
+@media (max-width: 576px) {
+
+  /* Navbar: убираем скруглённую пилюлю на маленьком экране */
+  .navbar {
+    border-radius: 16px;
+    margin-top: 0.6rem;
+  }
+
+  /* Hero: фото идёт под текст с отступом */
+  .hero-image {
+    margin-top: 2rem;
+    transform: none !important;
+    /* отключаем 3d на телефоне */
+  }
+
+  /* CTA: убираем абсолютные телефоны — они перекрывают кнопки */
+  .cta-phone {
+    display: none;
+    /* скрыть телефоны на xs, если они съедают место */
+  }
+
+  /* Service: reverse-row работает через Bootstrap, но сбрасываем его на xs */
+  .flex-row-reverse {
+    flex-direction: column !important;
+  }
+
+  /* Кнопки App Store/Google Play: стек */
+  .d-flex.gap-3>.btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* 577–768px — большие телефоны / маленькие планшеты */
+@media (min-width: 577px) and (max-width: 768px) {
+  .hero-image {
+    margin-top: 2.5rem;
+  }
+
+  .cta-phone {
+    min-height: 220px;
+  }
+}
+
+/* ≥ 992px — десктоп: восстанавливаем перспективу у hero-image */
+@media (min-width: 992px) {
+  .hero-image {
+    transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+  }
+
+  .hero-image:hover {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+  }
+
+  .mobile-phone {
+    margin-bottom: 0;
+  }
+}
+
+/* Системное предпочтение — применяется только если НЕТ явного выбора пользователя */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg-primary: #f4f6fa;
+    --bg-secondary: #e8edf5;
+    --bg-card: rgba(0, 0, 0, 0.03);
+    --bg-card-hover: rgba(0, 0, 0, 0.06);
+    --border-subtle: rgba(0, 0, 0, 0.08);
+    --border-hover: rgba(0, 0, 0, 0.15);
+    --text-primary: #0a0a0a;
+    --text-secondary: #4b5563;
+    --text-nav: #0a0a0a;
+    --hero-gradient: linear-gradient(351deg, #dde8f8 0%, #eef3fc 100%);
+    --hero-glow: radial-gradient(circle, rgba(34, 127, 194, 0.12) 0%, transparent 70%);
+    --title-gradient: linear-gradient(135deg, #0a0a0a 0%, #374151 100%);
+    --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.07), inset 0 0 4px rgba(255, 255, 255, 0.60);
+    --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.12);
+    --footer-bg: #1a1a1a;
+    --navbar-bg: rgba(255, 255, 255, 0.55);
+    --navbar-scroll-bg: rgba(255, 255, 255, 0.90);
+    --toggle-bg: rgba(0, 0, 0, 0.10);
+  }
+}
+
+
+
+
+.bg_lang {
+  border: 0.10px solid #e1e6ef;
+  border-radius: 12px;
+  max-width: 74px;
+  background: rgba(255, 255, 255, 0.1);
+}
