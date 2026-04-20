@@ -337,6 +337,9 @@ img {
   margin-top: 0.75rem;
 }
 
+
+/*FORM Page*/
+
 .form-section {
   position: relative;
   min-height: 100svh;
@@ -344,7 +347,9 @@ img {
   align-items: center;
   justify-content: center;
   padding: clamp(2rem, 6vw, 3.5rem) 0;
-  background: var(--hero-gradient);
+  background: url('/accets/img/form_bg.png') no-repeat;
+  background-size: cover;
+  background-position: center;
   overflow: hidden;
 }
 
@@ -364,7 +369,7 @@ img {
 }
 
 .form-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgb(0 0 0 / 79%);
   border: 0.0625rem solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.35);
   border-radius: 2rem;
@@ -437,14 +442,53 @@ img {
 }
 
 .signup-field__select {
+  width: 100%;
+  min-height: 3.2rem;
+  padding: 0.95rem 1rem;
+  padding-right: 3rem;
+
+  border-radius: 1rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.18);
+
+  background:
+    rgba(255, 255, 255, 0.04) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 1rem center;
+
+  background-size: 0.9rem;
+
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.75) 50%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.75) 50%, transparent 50%);
-  background-position: calc(100% - 1.1rem) calc(50% - 0.2rem), calc(100% - 0.6rem) calc(50% - 0.2rem);
-  background-size: 0.45rem 0.45rem;
-  background-repeat: no-repeat;
-  background-origin: content-box;
-  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  cursor: pointer;
+
+  transition: border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.signup-field__select:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.signup-field__select:focus {
+  border-color: rgba(34, 127, 194, 0.75);
+  background:
+    rgba(255, 255, 255, 0.08) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 1rem center;
+  background-size: 0.9rem;
+  box-shadow: 0 0 0 2px rgba(34, 127, 194, 0.15);
+}
+
+.signup-field__select option {
+  background: #111;
+  color: #fff;
+}
+
+.signup-field__select::-ms-expand {
+  display: none;
 }
 
 .form-submit {
