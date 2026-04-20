@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRAIN — Система автоматизации бизнеса</title>
+
+  <!-- Шрифт с характером — Sora (геометрический, технологичный) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 + Bootstrap Icons -->
+  <link href="/accets/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <!-- Swiper -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+  <!-- Наши стили (путь как у вас в проекте) -->
+  <link rel="stylesheet" href="/accets/css/main.css">
+
+  <!--
+    Тема определяется ДО рендера страницы, чтобы не было "мигания".
+    Скрипт маленький — намеренно inline в <head>.
+  -->
+  <script>
+    (function () {
+      const saved = localStorage.getItem('brainTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+
+<body>
+
+
+  <!-- ══════════════════════════════════════════════
+       NAVBAR (fixed-top)
+  ══════════════════════════════════════════════ -->
+  <div class="container-fluid fixed-top px-3 px-md-4">
+    <nav class="navbar navbar-expand-lg" id="mainNavbar" aria-label="Главная навигация">
+      <div class="container-fluid mx-1 mx-md-3">
+
+        <!-- Логотип -->
+        <a class="navbar-brand text-white" href="#" aria-label="BRAIN — на главную">
+          <img src="/accets/img/logo.svg" alt="BRAIN логотип" width="100" height="32">
+        </a>
+
+        <!-- Гамбургер (мобилки) + переключатель темы рядом -->
+        <div class="d-flex align-items-center gap-2 d-lg-none">
+          <!-- Переключатель темы (мобилка) -->
+          <button class="theme-toggle" id="themeToggleMob" aria-label="Переключить тему">
+            <i class="bi bi-moon-stars-fill" id="themeIconMob"></i>
+          </button>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+
+        <!-- Коллапсируемое меню -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto gap-1">
+            <li class="nav-item active"><a class="nav-link" href="#">Главный</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">О нас</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Партнёрам</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Продукты</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Цены</a></li>
+          </ul>
+
+          <!-- Правая часть: язык, тема (десктоп), CTA, войти -->
+          <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0 flex-wrap flex-lg-nowrap">
+
+            <!-- Выбор языка -->
+            <div class="dropdown">
+              <button class="btn  btn-sm dropdown-toggle rounded-3 d-flex align-items-center gap-1 btnBrain"
+                type="button" data-bs-toggle="dropdown" aria-label="Выбрать язык" style="border:none;">
+                <img src="/accets/img/ru-flag.svg" alt="" width="18" height="12"> Ru
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end rounded-3 bg_lang">
+                <li><a class="dropdown-item d-flex align-items-center gap-1" href="#">
+                    <img src="/accets/img/en-flag.svg" alt="" width="18" height="12"> Eng
+                  </a></li>
+                <li><a class="dropdown-item d-flex align-items-center gap-1" href="#">
+                    <img src="/accets/img/uz-flag.svg" alt="" width="18" height="12"> Uzb
+                  </a></li>
+              </ul>
+            </div>
+
+            <!-- Переключатель темы (только десктоп) -->
+            <button class="theme-toggle d-none d-lg-flex" id="themeToggleDesk" aria-label="Переключить тему">
+              <i class="bi bi-moon-stars-fill" id="themeIconDesk"></i>
+            </button>
+
+            <button class="btn btn-primary-custom btn_pay">Попробовать бесплатно</button>
+            <button class="btn btn-outline-light btn-sm nav-link">Войти</button>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+  </div><!-- /fixed-top -->
+
+  <main class="form-section" aria-label="Регистрационная форма">
+    <div class="form-section__overlay"></div>
+    <div class="container form-section__container">
+      <div class="form-card">
+        <div class="form-card__header">
+          <p class="form-card__eyebrow">Добро пожаловать</p>
+          <h1 class="form-card__title">Добро пожаловать в Brain</h1>
+          <p class="form-card__subtitle">Продвигайте свои навыки с нами</p>
+        </div>
+
+        <form class="signup-form" onsubmit="event.preventDefault();">
+          <label class="signup-field">
+            <span class="signup-field__label">Имя</span>
+            <input class="signup-field__input" type="text" placeholder="Введите имя" required>
+          </label>
+
+          <label class="signup-field">
+            <span class="signup-field__label">Телефон (обязательно)</span>
+            <input class="signup-field__input" type="tel" placeholder="Введите номер телефона" required>
+          </label>
+
+          <label class="signup-field">
+            <span class="signup-field__label">Область</span>
+            <select class="signup-field__select" required>
+              <option value="" disabled selected>Выберите область</option>
+              <option>Ташкент</option>
+              <option>Самарканд</option>
+              <option>Бухара</option>
+            </select>
+          </label>
+
+          <label class="signup-field">
+            <span class="signup-field__label">Район</span>
+            <select class="signup-field__select" required>
+              <option value="" disabled selected>Выберите район</option>
+              <option>Яшнобод</option>
+              <option>Мирабад</option>
+              <option>Яккасарай</option>
+            </select>
+          </label>
+
+          <button type="submit" class="btn btn-primary-custom form-submit">Отправить</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ══════════════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- Бренд -->
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="footer-logo text-white">
+            <img src="/accets/img/logo.svg" alt="BRAIN логотип" height="28">
+          </div>
+          <p class="mb-3" style="color:var(--text-secondary);font-size:.9rem;">AI Business</p>
+          <div class="d-flex gap-2 mb-3">
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-icon" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+          </div>
+          <p style="color:var(--text-secondary);font-size:.875rem;">
+            <i class="bi bi-telephone me-2"></i>+998 90 123 45 67
+          </p>
+          <p style="color:var(--text-secondary);font-size:.875rem;">Скачайте приложение</p>
+          <div class="d-flex gap-2 flex-wrap storyIcon">
+            <img src="/accets/img/playmarketfoo.svg" alt="Google Play" style="height:28px;">
+            <img src="/accets/img/apstoryfoo.svg" alt="App Store" style="height:28px;">
+          </div>
+        </div>
+
+        <!-- Возможности -->
+        <div class="col-12 col-sm-6 col-lg-3">
+          <h5 class="text-white mb-3">Возможности</h5>
+          <a href="#" class="footer-link">Структура компании</a>
+          <a href="#" class="footer-link">KPI и Метрики</a>
+          <a href="#" class="footer-link">Основные возможности</a>
+          <a href="#" class="footer-link">Контроль сотрудников</a>
+          <a href="#" class="footer-link">Мобильное приложение</a>
+        </div>
+
+        <!-- Ресурсы -->
+        <div class="col-12 col-sm-6 col-lg-3">
+          <h5 class="text-white mb-3">Ресурсы</h5>
+          <a href="#" class="footer-link">Документация по API</a>
+          <a href="#" class="footer-link">Безопасность данных</a>
+          <a href="#" class="footer-link">Блог</a>
+          <a href="#" class="footer-link">Онлайн-конференция</a>
+        </div>
+
+        <!-- О компании -->
+        <div class="col-12 col-sm-6 col-lg-3">
+          <h5 class="text-white mb-3">О компании</h5>
+          <a href="#" class="footer-link">Контакты</a>
+          <a href="#" class="footer-link">Отзывы</a>
+          <a href="#" class="footer-link">О компании</a>
+        </div>
+
+      </div>
+
+      <hr class="my-4" style="border-color:var(--border-subtle);">
+
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p style="color:var(--text-secondary);margin:0;font-size:.875rem;">© ООО «Brain», 2021–2025</p>
+        </div>
+        <div class="col-md-6 text-md-end mt-2 mt-md-0">
+          <a href="#" class="footer-link d-inline-block me-3" style="font-size:.875rem;">Privacy</a>
+          <a href="#" class="footer-link d-inline-block me-3" style="font-size:.875rem;">Terms</a>
+          <a href="#" class="footer-link d-inline-block" style="font-size:.875rem;">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════
+         SCRIPTS
+    ══════════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ===== Переключение цен =====
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggleButtons = document.querySelectorAll('.pricing-toggle button');
+      const priceYearly = document.querySelectorAll('.price-yearly');
+      const priceMonthly = document.querySelectorAll('.price-monthly');
+
+      toggleButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const period = this.dataset.period;
+
+          // Переключаем активную кнопку
+          toggleButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+
+          // Показываем соответствующие цены
+          if (period === 'yearly') {
+            priceYearly.forEach(el => el.classList.remove('price-hidden'));
+            priceMonthly.forEach(el => el.classList.add('price-hidden'));
+          } else {
+            priceYearly.forEach(el => el.classList.add('price-hidden'));
+            priceMonthly.forEach(el => el.classList.remove('price-hidden'));
+          }
+        });
+      });
+
+      // ===== Эффект параллакса при наведении на карточки =====
+      const cards = document.querySelectorAll('.pricing-card');
+
+      cards.forEach(card => {
+        card.addEventListener('mousemove', function (e) {
+          const rect = this.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = (y - centerY) / 20;
+          const rotateY = (centerX - x) / 20;
+
+          this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+        });
+
+        card.addEventListener('mouseleave', function () {
+          this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
